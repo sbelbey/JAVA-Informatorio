@@ -7,7 +7,7 @@ public class ejercicio7 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         System.out.println("Ingrese el texto a cambiar: ");
-        String texto = scan.nextLine();
+        String texto = String.valueOf(scan.nextLine());
         scan.close();
 
         for (int i = 0; i<texto.length(); i++){

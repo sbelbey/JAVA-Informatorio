@@ -15,9 +15,9 @@ public class ejercicio8 {
         System.out.println("Ingrese los datos de la persona: ");
         ArrayList<String> persona = new ArrayList<>();
         for (int i = 1; i <= 4; i++) {
-            persona.add(scan.nextLine());
+            persona.add(String.valueOf(scan.nextLine()));
         }
-
+        scan.close();
         for (int i = 3; i>=0; i--){
             System.out.print(persona.get(i));
             if (i != 0) {
