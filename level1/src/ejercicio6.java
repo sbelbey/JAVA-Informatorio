@@ -9,7 +9,7 @@ public class ejercicio6 {
         Integer num1 = Integer.valueOf(scan.nextLine());
         System.out.println("Ingrese el exponente: ");
         Integer num2 = Integer.valueOf(scan.nextLine());
-
+        scan.close();
         System.out.println(num1 + " elevado a " + num2 + " = " + elevar(num1, num2));
     }
 
