@@ -9,7 +9,7 @@ public class ejercicio4 {
         Scanner scan = new Scanner(System.in);
         System.out.println("Ingrese el número a factorializar: ");
         Integer num = Integer.valueOf(scan.nextInt());
-
+        scan.close();
         System.out.println("El factorial de " + num + " es: " + factorializar(num));
     }
 
