@@ -5,49 +5,50 @@
 
 //Ayuda: ArrayList implementa la interface Collection, existe algún método que me permita hacer
 // la operación sort (mezclar) aleatoriamente? Idem para el reverso
-
-import java.util.Collections;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class Ejercicio3 {
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        ArrayList<String> baraja = new ArrayList<>();
-
-        baraja = agregarCartas(baraja, scan);
+        List<String> baraja = new ArrayList<>();
+        List<String> palos = new ArrayList<>();
+        palos.addAll(Arrays.asList("Corazones" , "Picas", "Diamantes", "Treboles"));
+        agregarCartas(baraja, palos);
+        System.out.println("\n--------------------EN ORDEN------------------------");
         imprimir(baraja);
-        imprimirInverso(baraja);
-        baraja = mezclar(baraja);
+        System.out.println("\n--------------------INVERSO------------------------");
+        Inverso(baraja);
         imprimir(baraja);
-        scan.close();
+        System.out.println("\n--------------------MEZCLADO------------------------");
+        mezclar(baraja);
+        imprimir(baraja);
     }
 
-    public static ArrayList agregarCartas(ArrayList<String> barajas, Scanner scan){
-        for (int i=0; i<=12; i++){
-            System.out.print("Ingrese el valor de la carta: ");
-            barajas.add(String.valueOf(scan.nextLine()));
+    public static void agregarCartas(List<String> barajas, List<String> palos){
+        for (String palo: palos) {
+            for (int i = 2; i<=9; i++){
+                barajas.add(String.valueOf(i) + " de " + palo);
+            }
         }
-        return barajas;
     }
 
-    public static void imprimir(ArrayList<String> baraja){
+    public static void imprimir(List<String> baraja){
+        Integer cont = 0;
         for (String carta: baraja){
-            System.out.print(carta + " ");
+            if (cont<=5){
+                System.out.print(carta + " ");
+                cont ++;
+            }else {
+                cont=0;
+                System.out.print(carta + "\n");
+            }
         }
-        System.out.println("");
     }
 
-    public static void imprimirInverso(ArrayList<String> baraja){
+    public static void Inverso(List<String> baraja){
         Collections.reverse(baraja);
-        for (String carta: (baraja)){
-            System.out.print(carta + " ");
-        }
-        System.out.println("");
     }
 
-    public static ArrayList mezclar(ArrayList<String> baraja){
+    public static void mezclar(List<String> baraja){
         Collections.shuffle(baraja);
-        return baraja;
     }
 }

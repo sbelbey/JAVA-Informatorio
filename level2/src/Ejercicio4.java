@@ -1,7 +1,6 @@
 //Cargar un arrayList con 12 nombres de estudiantes (String),
 // luego separarlos en 3 cursos (3 arrayList)
 // e imprimir dichos cursos.
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
@@ -30,7 +29,6 @@ public class Ejercicio4 {
                 System.out.print(nombre + " ");
             }
             System.out.println("");
-            
         }
 
     }

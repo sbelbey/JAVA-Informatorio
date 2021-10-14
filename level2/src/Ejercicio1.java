@@ -11,6 +11,7 @@
 //#3 - Resistencia
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Ejercicio1 {
@@ -18,15 +19,15 @@ public class Ejercicio1 {
         Scanner scan = new Scanner(System.in);
 
         Integer control = 0;
-        ArrayList<String> ciudades = new ArrayList<>();
+        List<String> ciudades = new ArrayList<>();
 
         do {
             System.out.println("Ingresá de a una tus ciudades argentinas favoritas:");
             ciudades.add(String.valueOf(scan.nextLine()));
             System.out.println("Para salir ingresá 1, para continuar seleccioná cualquier otro número.");
             control = Integer.valueOf(scan.nextLine());
-
         }while (control != 1);
+
         scan.close();
 
         System.out.println("La el ranking de ciudades es: ");
