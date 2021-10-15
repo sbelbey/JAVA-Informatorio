@@ -14,8 +14,10 @@ public class ejercicio7 {
             char letra = texto.charAt(i);
             if (letra >= 97 && letra <= 122){
                 letra = (char)( (letra - 32));
+                System.out.print(letra);
+            }else if(letra==241){
+                System.out.print("Ñ");
             }
-            System.out.print(letra);
         }
     }
 }
