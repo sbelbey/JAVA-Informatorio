@@ -6,7 +6,7 @@ public class Ejercicio2 {
         List<Integer> palabras = List.of(1, 2, 3, 4, 5);
         Integer potencia  = 2;
         List<Integer> numerosPotenciados = palabras.stream()
-                                            .map(p-> Ejercicio2.calcularPotencia(p,potencia))
+                                            .map(p-> Ejercicio2.calcularPotencia(p, potencia))
                                             .collect(Collectors.toList());
         System.out.println(numerosPotenciados);
     }

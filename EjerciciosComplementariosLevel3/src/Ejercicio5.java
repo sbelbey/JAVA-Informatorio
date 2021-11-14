@@ -17,11 +17,11 @@ public class Ejercicio5 {
         Map<String, Integer> alumnosConEdades = alumnos.stream()
                 .collect(Collectors
                         .toMap(p-> (p.getName() + " " + p.getSurname()),
-                                p -> Ejercicio5.getAEdad(p.getBirthday())));
+                                p -> Ejercicio5.getEdad(p.getBirthday())));
         System.out.println(alumnosConEdades);
     }
 
-    public static Integer getAEdad(LocalDate birthDate){
+    public static Integer getEdad(LocalDate birthDate){
         return Period.between(birthDate, LocalDate.now()).getYears();
     }
 }

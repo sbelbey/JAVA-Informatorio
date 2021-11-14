@@ -11,7 +11,7 @@ public class Ejercicio4 {
         System.out.println(otraLista);
     }
 
-    public static Integer factorial (Integer numero) {
+    public static Integer factorial(Integer numero) {
         if (numero == 1){
             return 1;
         }else {

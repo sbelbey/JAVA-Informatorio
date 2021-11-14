@@ -10,10 +10,9 @@ public class Ejercicio1 {
         palabras.add(null);
         palabras.add("Informatorio");
         palabras.add("");
-
         List<String> listaFiltrada = palabras.stream()
                                      .filter(Objects::nonNull)
-                                     .filter(p-> p!= "")
+                                     .filter(p -> !p.equals(""))
                                      .collect(Collectors.toList());
         System.out.println(listaFiltrada);
     }
