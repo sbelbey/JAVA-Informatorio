@@ -2,6 +2,7 @@ package com.informatorio.trabajoFinal.controller;
 
 import com.informatorio.trabajoFinal.Entity.Emprendimientos;
 import com.informatorio.trabajoFinal.Repository.EmprendimientosRepository;
+import com.informatorio.trabajoFinal.services.EmprendimientoServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,12 @@ import javax.validation.Valid;
 public class EmprendimientosController {
 
     private EmprendimientosRepository emprendimientosRepository;
+    private EmprendimientoServices emprendimientoService;
 
     @Autowired
-    public EmprendimientosController(EmprendimientosRepository emprendimientosRepository) {
+    public EmprendimientosController(EmprendimientosRepository emprendimientosRepository, EmprendimientoServices emprendimientoService) {
         this.emprendimientosRepository = emprendimientosRepository;
+        this.emprendimientoService = emprendimientoService;
     }
 
     @GetMapping
@@ -29,6 +32,7 @@ public class EmprendimientosController {
 
     @PostMapping
     public ResponseEntity<?> agregarEmprendimiento (@RequestBody @Valid Emprendimientos emprendimientoRecibido){
+        emprendimientoService.agregarTags(emprendimientoRecibido.getTagsIngresados());
         return new ResponseEntity<>(emprendimientosRepository.save(emprendimientoRecibido), HttpStatus.CREATED);
     }
 
@@ -44,4 +48,11 @@ public class EmprendimientosController {
         emprendimientoExistente.setPublicado(emprendimientoRecibido.isPublicado());
         return new ResponseEntity<>(emprendimientosRepository.save(emprendimientoExistente), HttpStatus.OK);
     }
+
+    /*
+    @GetMapping (value = "/tag/{tag}")
+    public ResponseEntity<?> buscarPorTag(@PathVariable("tag") String tag) {
+    }
+    */
+
 }

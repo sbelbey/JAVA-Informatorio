@@ -28,8 +28,11 @@ public class Emprendimientos {
     private LocalDateTime fechaDeCreacion;
     private BigDecimal objetivo;
     private boolean publicado = false;
-    @JsonIgnore
-    @ManyToMany(mappedBy = "tagName", cascade = CascadeType.ALL)
+    private String tagsIngresados;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "emprendimientosTags",
+                        joinColumns = {@JoinColumn(name = "emprendimientoId")},
+                        inverseJoinColumns = {@JoinColumn(name = "tagsId")})
     private List<Tags> tags = new ArrayList<>();
 
     public Long getId() {
@@ -86,6 +89,10 @@ public class Emprendimientos {
 
     public void setPublicado(boolean publicado) {
         this.publicado = publicado;
+    }
+
+    public String getTagsIngresados() {
+        return tagsIngresados;
     }
 
     public List<Tags> getTags() {

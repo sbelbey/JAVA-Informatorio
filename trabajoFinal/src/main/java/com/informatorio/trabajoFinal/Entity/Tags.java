@@ -13,9 +13,7 @@ public class Tags {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String tagName;
-    @JsonIgnore
-    @ManyToMany(mappedBy = "nombre", cascade = CascadeType.ALL)
-    private List<Emprendimientos> emprendimientosTagueados = new ArrayList<>();
+
 
     public Long getId() {
         return id;
@@ -31,11 +29,6 @@ public class Tags {
 
     public void setTagName(String tagName) {
         this.tagName = tagName;
-    }
-
-    public void setEmprendimientosTagueados(Emprendimientos emprendimiento){
-        emprendimientosTagueados.add(emprendimiento);
-        emprendimiento.setTags(this);
     }
 
     @Override
