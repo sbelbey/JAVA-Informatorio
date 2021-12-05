@@ -18,8 +18,7 @@ public class EmprendimientoServices {
     }
 
     public void agregarTags(String tagsIngresados){
-        tagsIngresados = tagsIngresados.trim();
-        tagsIngresados = tagsIngresados.replace("#", "");
+        tagsIngresados = tagsIngresados.trim().replace("#", "");
         String[] tags = tagsIngresados.split(",");
         Arrays.stream(tags).forEach(p-> tagsRepository.save(p));
     }
