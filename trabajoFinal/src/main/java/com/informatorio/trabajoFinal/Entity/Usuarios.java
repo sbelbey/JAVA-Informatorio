@@ -7,6 +7,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Usuarios {
@@ -32,6 +34,8 @@ public class Usuarios {
     private TipoUsuario tipoUsuario;
     @NotBlank
     private String password;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Votos> votos = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -111,6 +115,15 @@ public class Usuarios {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Votos> getVotos() {
+        return votos;
+    }
+
+    public void setVotos(Votos votoRecibido) {
+        votos.add(votoRecibido);
+        votoRecibido.setUsuario(this);
     }
 
     @Override

@@ -28,12 +28,10 @@ public class Emprendimientos {
     private LocalDateTime fechaDeCreacion;
     private BigDecimal objetivo;
     private boolean publicado = false;
-    private String tagsIngresados;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "emprendimientosTags",
-                        joinColumns = {@JoinColumn(name = "emprendimientoId")},
-                        inverseJoinColumns = {@JoinColumn(name = "tagsId")})
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Tags> tags = new ArrayList<>();
+    @OneToMany(mappedBy = "emprendimiento",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Votos> votos = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -91,16 +89,22 @@ public class Emprendimientos {
         this.publicado = publicado;
     }
 
-    public String getTagsIngresados() {
-        return tagsIngresados;
-    }
-
     public List<Tags> getTags() {
         return tags;
     }
 
-    public void setTags(Tags tagueos) {
-        tags.add(tagueos);
+    public void agregarTag(Tags tag) {
+        tags.add(tag);
+        tag.getEmprendimientos().add(this);
+    }
+
+    public List<Votos> getVotos() {
+        return votos;
+    }
+
+    public void setVotos(Votos votosRecibidos) {
+        votos.add(votosRecibidos);
+        votosRecibidos.setEmprendimiento(this);
     }
 
     @Override
