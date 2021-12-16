@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/eventos")
@@ -55,12 +56,11 @@ public class EventosController {
         Eventos eventoExistente = eventosRepository.findById(eventoId)
                 .orElseThrow(() -> new EntityNotFoundException("Evento no encontrado"));
         List<Emprendimientos> emprendimientos = eventoExistente.getEmprendimientosSuscriptos();
-        if (emprendimientos.size() > 1 ){
-            emprendimientos.sort(
-                    (Emprendimientos e1, Emprendimientos e2) -> (Integer.compare(e2.getVotos().size(),
-                            e1.getVotos().size()))
-            );
-        }
-        return emprendimientos;
+        Comparator<Emprendimientos> comparador = (Emprendimientos e1, Emprendimientos e2) ->
+                                                    Integer.compare(e1.getVotos().size(), (e2.getVotos().size()));
+        List<Emprendimientos> emprenimientosOrdenados = emprendimientos.stream()
+                                                        .sorted(comparador)
+                                                        .collect(Collectors.toList());
+        return emprenimientosOrdenados;
     }
 }
