@@ -1,5 +1,6 @@
 package com.informatorio.trabajoFinal.Entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.informatorio.trabajoFinal.dto.TipoUsuario;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Entity
 public class Usuarios {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,9 +35,13 @@ public class Usuarios {
     private LocalDateTime fechaCreacion;
     private TipoUsuario tipoUsuario;
     @NotBlank
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Votos> votos = new ArrayList<>();
+    @OneToMany(mappedBy = "propietario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Emprendimientos> emprendimientoPropietario = new ArrayList<>();
+    private boolean activo = false;
 
     public Long getId() {
         return id;
@@ -110,7 +116,7 @@ public class Usuarios {
     }
 
     public String getPassword() {
-        return "***********";
+        return password;
     }
 
     public void setPassword(String password) {
@@ -124,6 +130,23 @@ public class Usuarios {
     public void setVotos(Votos votoRecibido) {
         votos.add(votoRecibido);
         votoRecibido.setUsuario(this);
+    }
+
+    public List<Emprendimientos> getEmprendimientoPropietario() {
+        return emprendimientoPropietario;
+    }
+
+    public void setEmprendimientoPropietario(Emprendimientos emprendimiento) {
+        emprendimientoPropietario.add(emprendimiento);
+        emprendimiento.setPropietario(this);
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     @Override

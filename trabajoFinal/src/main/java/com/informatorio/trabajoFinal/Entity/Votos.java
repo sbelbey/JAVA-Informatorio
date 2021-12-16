@@ -5,23 +5,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 @Entity
 public class Votos {
-
+//Modificar el usuario para que solo muestre el mail del usuario que votó.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty
     private String dispositivo;
-
     @CreationTimestamp
     private LocalDateTime fechaCreacion;
-
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Usuarios usuario;
-
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Emprendimientos emprendimiento;

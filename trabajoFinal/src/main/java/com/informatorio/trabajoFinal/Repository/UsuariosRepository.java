@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface UsuariosRepository extends JpaRepository<Usuarios, Long>{
-    public List<Usuarios> findByCiudad(String ciudad);
+    public List<Usuarios> findByCiudad(String ciudado);
+    public List<Usuarios> findByActivo(boolean activo);
 }

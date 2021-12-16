@@ -1,6 +1,8 @@
 package com.informatorio.trabajoFinal.controller;
 
+import com.informatorio.trabajoFinal.Entity.Emprendimientos;
 import com.informatorio.trabajoFinal.Entity.Usuarios;
+import com.informatorio.trabajoFinal.Repository.EmprendimientosRepository;
 import com.informatorio.trabajoFinal.Repository.UsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,17 +18,19 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(value = "/usuarios")
 public class UsuariosController {
-
+//Arreglar el tema de los gets.
     private UsuariosRepository usuariosRepository;
+    private EmprendimientosRepository emprendimientosRepository;
 
     @Autowired
-    public UsuariosController(UsuariosRepository usuariosRepository) {
+    public UsuariosController(UsuariosRepository usuariosRepository, EmprendimientosRepository emprendimientosRepository) {
         this.usuariosRepository = usuariosRepository;
+        this.emprendimientosRepository = emprendimientosRepository;
     }
 
     @GetMapping
     public ResponseEntity<?> obtenerTodosUsuarios(){
-        return new ResponseEntity<>(usuariosRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(usuariosRepository.findByActivo(true), HttpStatus.OK);
     }
 
     @PostMapping
@@ -41,7 +45,8 @@ public class UsuariosController {
 
     @PutMapping (value = "/id/{usuarioId}")
     public Usuarios modificarUsuario (@PathVariable("usuarioId") Long usuarioId,
-                                     @RequestBody @Valid Usuarios usuarioRecibido){
+                                     @RequestBody @Valid Usuarios usuarioRecibido,
+                                     @RequestParam(name = "emprendimiento")Long empId){
         Usuarios usuarioExistente = usuariosRepository.findById(usuarioId)
                 .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
         usuarioExistente.setNombre(usuarioRecibido.getNombre());
@@ -49,6 +54,11 @@ public class UsuariosController {
         usuarioExistente.setCiudad(usuarioRecibido.getCiudad());
         usuarioExistente.setProvincia(usuarioRecibido.getProvincia());
         usuarioExistente.setPais(usuarioRecibido.getPais());
+        if (empId != null){
+            Emprendimientos emprendimientoExistente = emprendimientosRepository.findById(empId)
+                    .orElseThrow(()->new EntityNotFoundException("Emprendimiemto no encontrado"));
+            usuarioExistente.setEmprendimientoPropietario(emprendimientoExistente);
+        }
         return usuariosRepository.save(usuarioExistente);
     }
 

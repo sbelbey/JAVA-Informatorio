@@ -3,6 +3,7 @@ package com.informatorio.trabajoFinal.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ public class Tags {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty
     private String tagName;
     @JsonIgnore
     @ManyToMany(mappedBy = "tags")

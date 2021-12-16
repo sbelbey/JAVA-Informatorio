@@ -1,7 +1,9 @@
 package com.informatorio.trabajoFinal.controller;
 
 import com.informatorio.trabajoFinal.Entity.Emprendimientos;
+import com.informatorio.trabajoFinal.Entity.Eventos;
 import com.informatorio.trabajoFinal.Repository.EmprendimientosRepository;
+import com.informatorio.trabajoFinal.Repository.EventosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,15 +18,19 @@ import javax.validation.Valid;
 public class EmprendimientosController {
 
     private EmprendimientosRepository emprendimientosRepository;
+    private EventosRepository eventosRepository;
 
     @Autowired
-    public EmprendimientosController(EmprendimientosRepository emprendimientosRepository) {
+    public EmprendimientosController(EmprendimientosRepository emprendimientosRepository,
+                                     EventosRepository eventosRepository) {
         this.emprendimientosRepository = emprendimientosRepository;
+        this.eventosRepository = eventosRepository;
     }
 
     @GetMapping
     public ResponseEntity<?> obtenerTodosEmprendimientos (@RequestParam(name = "tag", required = false) String tag,
-                                                          @RequestParam(name = "publicado", required = false, defaultValue = "true") boolean publicado){
+                                                          @RequestParam(name = "publicado",
+                                                                  required = false, defaultValue = "true") boolean publicado){
         if(tag != null){
             return new ResponseEntity<>(emprendimientosRepository.findBytag(tag), HttpStatus.OK);
         } else if(!publicado){
@@ -38,23 +44,24 @@ public class EmprendimientosController {
         return new ResponseEntity<>(emprendimientosRepository.save(emprendimientoRecibido), HttpStatus.CREATED);
     }
 
-    @PutMapping (value = "/{id}")
+    @PutMapping (value = "/id/{id}")
     public ResponseEntity<?> modificarEmprendimiento (@PathVariable("id") Long emprendimientoId,
-                                                      @RequestBody @Valid Emprendimientos emprendimientoRecibido){
+                                                      @RequestBody @Valid Emprendimientos emprendimientoRecibido,
+                                                      @RequestParam(name = "suscipto", required = false) Long eventoId){
         Emprendimientos emprendimientoExistente = emprendimientosRepository.findById(emprendimientoId)
-                .orElseThrow(()->new EntityNotFoundException("Emprendimiemto no encontrado"));
+                                        .orElseThrow(()->new EntityNotFoundException("Emprendimiemto no encontrado"));
         emprendimientoExistente.setNombre(emprendimientoRecibido.getNombre());
         emprendimientoExistente.setDescripcion(emprendimientoRecibido.getDescripcion());
         emprendimientoExistente.setContenido(emprendimientoRecibido.getContenido());
-        emprendimientoExistente.setObjetivo(emprendimientoRecibido.getObjetivo());
+        if (emprendimientoRecibido.getObjetivo() != null){
+            emprendimientoExistente.setObjetivo(emprendimientoRecibido.getObjetivo());
+        }
         emprendimientoExistente.setPublicado(emprendimientoRecibido.isPublicado());
+        if(eventoId != null){
+            Eventos eventoASuscibirse = eventosRepository.findById(eventoId)
+                    .orElseThrow(()-> new EntityNotFoundException("Evento no encontrado"));
+            emprendimientoExistente.setEventos(eventoASuscibirse);
+        }
         return new ResponseEntity<>(emprendimientosRepository.save(emprendimientoExistente), HttpStatus.CREATED);
     }
-
-    /*
-    @GetMapping (value = "/tag/{tag}")
-    public ResponseEntity<?> buscarPorTag(@PathVariable("tag") String tag) {
-    }
-    */
-
 }

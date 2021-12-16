@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,25 +13,39 @@ import java.util.List;
 
 @Entity
 public class Emprendimientos {
+//falta agregar los colaboradores (ver cómo solucionar ese tema).
+//Ver como hacer la baja lógica.
+    //Guardar solo el nombre del usuario
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
+    @NotEmpty
     private String nombre;
-    @NotBlank
-    @Column(length = 5000)
+    @NotEmpty
     private String descripcion;
-    @NotBlank
+    @NotEmpty
+    @Column(length = 5000)
     private String contenido;
     @CreationTimestamp
     private LocalDateTime fechaDeCreacion;
     private BigDecimal objetivo;
-    private boolean publicado = false;
+    private boolean publicado;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Usuarios propietario;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Tags> tags = new ArrayList<>();
     @OneToMany(mappedBy = "emprendimiento",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Votos> votos = new ArrayList<>();
+    @ManyToMany (mappedBy = "emprendimientosSuscriptos")
+    private List<Eventos> eventos = new ArrayList<>();
+    /*@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "emprendimientos_id")
+    private List<Urls> imagenes = new ArrayList<>();*/
+    private String urls;
+    private boolean activo = false;
+
 
     public Long getId() {
         return id;
@@ -105,6 +119,46 @@ public class Emprendimientos {
     public void setVotos(Votos votosRecibidos) {
         votos.add(votosRecibidos);
         votosRecibidos.setEmprendimiento(this);
+    }
+
+    public List<Eventos> getEventos() {
+        return eventos;
+    }
+
+    public void setEventos(Eventos evento) {
+        eventos.add(evento);
+    }
+
+    public Usuarios getPropietario() {
+        return propietario;
+    }
+
+    public void setPropietario(Usuarios propietario) {
+        this.propietario = propietario;
+    }
+
+    /*public List<Urls> getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(Urls imagenesRecibidas) {
+        imagenes.add(imagenesRecibidas);
+    }*/
+
+    public String getUrls() {
+        return urls;
+    }
+
+    public void setUrls(String urls) {
+        this.urls = urls;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     @Override
