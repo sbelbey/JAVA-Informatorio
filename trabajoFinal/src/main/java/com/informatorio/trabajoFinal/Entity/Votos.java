@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Votos {
-//Modificar el usuario para que solo muestre el mail del usuario que votó.
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

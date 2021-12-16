@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(value = "/usuarios")
 public class UsuariosController {
-//Arreglar el tema de los gets.
+
     private UsuariosRepository usuariosRepository;
     private EmprendimientosRepository emprendimientosRepository;
 
@@ -46,7 +46,8 @@ public class UsuariosController {
     @PutMapping (value = "/id/{usuarioId}")
     public Usuarios modificarUsuario (@PathVariable("usuarioId") Long usuarioId,
                                      @RequestBody @Valid Usuarios usuarioRecibido,
-                                     @RequestParam(name = "emprendimiento")Long empId){
+                                     @RequestParam(name = "emprendimiento", required = false)Long empId,
+                                      @RequestParam(name = "activacion", required = true)boolean activacion){
         Usuarios usuarioExistente = usuariosRepository.findById(usuarioId)
                 .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
         usuarioExistente.setNombre(usuarioRecibido.getNombre());
@@ -54,6 +55,7 @@ public class UsuariosController {
         usuarioExistente.setCiudad(usuarioRecibido.getCiudad());
         usuarioExistente.setProvincia(usuarioRecibido.getProvincia());
         usuarioExistente.setPais(usuarioRecibido.getPais());
+        usuarioExistente.setActivo(activacion);
         if (empId != null){
             Emprendimientos emprendimientoExistente = emprendimientosRepository.findById(empId)
                     .orElseThrow(()->new EntityNotFoundException("Emprendimiemto no encontrado"));

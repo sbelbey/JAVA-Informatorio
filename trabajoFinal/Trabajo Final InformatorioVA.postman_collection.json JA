@@ -1,0 +1,450 @@
+{
+	"info": {
+		"_postman_id": "5c27b418-8a9b-40a7-975e-bcd40b89b06b",
+		"name": "Trabajo Final Informatorio JAVA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Agregar Usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\" : \"Nabil\",\n    \"apellido\" : \"Frances\",\n    \"usuario\" : \"nabil@gmail.com\",\n    \"ciudad\" : \"Resistencia\",\n    \"provincia\" : \"Chaco\",\n    \"pais\" : \"Argentina\",\n    \"tipoUsuario\" : \"OWNER\",\n    \"password\" : \"12345\",\n    \"activo\" : true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/usuarios",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar todos los Usuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/usuarios",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/usuarios/id/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"id",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar un usuario por Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\" : \"Juan\",\n    \"apellido\" : \"Palotes\",\n    \"usuario\" : \"sbelbey@icloud10.com\",\n    \"ciudad\" : \"Corrientes\",\n    \"provincia\" : \"Corrientes\",\n    \"pais\" : \"Argentina\",\n    \"tipoUsuario\" : \"OWNER\",\n    \"password\" : \"1234sadwas\"\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/usuarios/id/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"id",
+								"2"
+							],
+							"query": [
+								{
+									"key": "emprendimiento",
+									"value": "4",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "activacion",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filtrar por fecha",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/usuarios/fecha/2021-12-16T13:01:00",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"fecha",
+								"2021-12-16T13:01:00"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Emprendimientos",
+			"item": [
+				{
+					"name": "Agregar Emprendimiento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\" : \"Cancha de Paddle\",\n    \"descripcion\": \"Las mejores canchas de paddel del mundo\",\n    \"contenido\" : \"Vini a jugar con tus amigos y familia\",\n    \"objetivo\" : 300000.00,\n    \"publicado\": true,\n    \"tags\": [\n        {\"tagName\": \"pelota\"},\n        {\"tagName\": \"paleta\"},\n        {\"tagName\": \"cacha\"}\n    ],\n    \"urls\": \"www.google.com, www.yahoo.com, www.facebook.com\",\n    \"activo\" : true,\n    \"\"\n\n}\n    ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/emprendimientos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"emprendimientos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener todos los emprendimientos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/emprendimientos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"emprendimientos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar Emprendimientos",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Hotel de Mascotas\",\n    \"descripcion\": \"Crear un hotel de mascotas\",\n    \"contenido\": \"Vamos a cuidar tu perro\"\n}\n    ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/emprendimientos/id/2?suscripto=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"emprendimientos",
+								"id",
+								"2"
+							],
+							"query": [
+								{
+									"key": "suscripto",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener los emprendimientos por tag",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/emprendimientos?tag=perro",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"emprendimientos"
+							],
+							"query": [
+								{
+									"key": "tag",
+									"value": "perro"
+								},
+								{
+									"key": "publicado",
+									"value": "false",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Suscribirse a un evento",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Hotel de Mascotas\",\n    \"descripcion\": \"Crear un hotel de mascotas\",\n    \"contenido\": \"Vamos a cuidar tu perro\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/emprendimientos/id/2?suscripto=1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"emprendimientos",
+								"id",
+								"2"
+							],
+							"query": [
+								{
+									"key": "suscripto",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Votos",
+			"item": [
+				{
+					"name": "Agregar voto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"dispositivo\" : \"compu\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/voto?empId=3&usu=2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"voto"
+							],
+							"query": [
+								{
+									"key": "empId",
+									"value": "3"
+								},
+								{
+									"key": "usu",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Votos de un Usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/voto?usu=4",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"voto"
+							],
+							"query": [
+								{
+									"key": "usu",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Eventos",
+			"item": [
+				{
+					"name": "Agregar un Evento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"descripcion\" : \"Concierto de Damas Gratis\",\n    \"fechaCierre\" : \"2028-03-22\",\n    \"estado\": \"CERRADO\",\n    \"premio\" : 40.00,\n    \"activo\" : true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/eventos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"eventos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Evento por Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/eventos/id/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"eventos",
+								"id",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificaición de Evento por Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"descripcion\" : \"Modificación del evento.\",\n    \"fechaCierre\" : \"2022-03-25\",\n    \"estado\": \"CERRADO\",\n    \"premio\" : 5000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/eventos/id/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"eventos",
+								"id",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Ranking",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

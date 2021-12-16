@@ -13,9 +13,6 @@ import java.util.List;
 
 @Entity
 public class Emprendimientos {
-//falta agregar los colaboradores (ver cómo solucionar ese tema).
-//Ver como hacer la baja lógica.
-    //Guardar solo el nombre del usuario
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -127,6 +124,7 @@ public class Emprendimientos {
 
     public void setEventos(Eventos evento) {
         eventos.add(evento);
+        evento.getEmprendimientosSuscriptos().add(this);
     }
 
     public Usuarios getPropietario() {

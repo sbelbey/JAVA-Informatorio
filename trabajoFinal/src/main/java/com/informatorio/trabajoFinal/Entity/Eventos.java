@@ -6,7 +6,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,7 +15,7 @@ import java.util.List;
 
 @Entity
 public class Eventos {
-//baja logica, y el ranking tiene que ser de acuerdo a la votacion en los emprendimientos.
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -90,6 +89,14 @@ public class Eventos {
 
     public void setEmprendimientosSuscriptos(List<Emprendimientos> emprendimientosSuscriptos) {
         this.emprendimientosSuscriptos = emprendimientosSuscriptos;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     @Override

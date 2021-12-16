@@ -36,7 +36,7 @@ public class EmprendimientosController {
         } else if(!publicado){
             return new ResponseEntity<>(emprendimientosRepository.findByPublicado(publicado), HttpStatus.OK);
         }
-        return new ResponseEntity<>(emprendimientosRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(emprendimientosRepository.findByActivo(true), HttpStatus.OK);
     }
 
     @PostMapping
@@ -47,7 +47,7 @@ public class EmprendimientosController {
     @PutMapping (value = "/id/{id}")
     public ResponseEntity<?> modificarEmprendimiento (@PathVariable("id") Long emprendimientoId,
                                                       @RequestBody @Valid Emprendimientos emprendimientoRecibido,
-                                                      @RequestParam(name = "suscipto", required = false) Long eventoId){
+                                                      @RequestParam(name = "suscripto", required = false) Long eventoId){
         Emprendimientos emprendimientoExistente = emprendimientosRepository.findById(emprendimientoId)
                                         .orElseThrow(()->new EntityNotFoundException("Emprendimiemto no encontrado"));
         emprendimientoExistente.setNombre(emprendimientoRecibido.getNombre());
