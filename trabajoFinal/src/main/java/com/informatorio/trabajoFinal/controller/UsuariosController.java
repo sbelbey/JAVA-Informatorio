@@ -40,7 +40,10 @@ public class UsuariosController {
 
     @DeleteMapping (value = "/id/{usuarioId}")
     public void elimirUsuario(@PathVariable("usuarioId") Long usuarioId){
-        usuariosRepository.deleteById(usuarioId);
+        Usuarios usuario = usuariosRepository.findById(usuarioId)
+                .orElseThrow(()-> new EntityNotFoundException("Usuario no encontrado."));
+        usuario.setActivo(false);
+        usuariosRepository.save(usuario);
     }
 
     @PutMapping (value = "/id/{usuarioId}")

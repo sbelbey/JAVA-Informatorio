@@ -33,7 +33,9 @@ public class EventosController {
 
     @DeleteMapping (value = "/id/{id}")
     public void eliminarEvento(@PathVariable ("id") Long eventoId){
-        eventosRepository.deleteById(eventoId);
+        Eventos evento = eventosRepository.findById(eventoId)
+                .orElseThrow(()-> new EntityNotFoundException("Evento no encontrado"));
+        evento.setActivo(false);
     }
 
     @PutMapping (value = "/id/{id}")
@@ -49,7 +51,7 @@ public class EventosController {
     }
 
     @GetMapping
-    public ResponseEntity<?> ranking(@RequestParam(name = "eventoId", required = true)Long eventoId){
+    public List<Emprendimientos> ranking(@RequestParam(name = "eventoId", required = true)Long eventoId){
         Eventos eventoExistente = eventosRepository.findById(eventoId)
                 .orElseThrow(() -> new EntityNotFoundException("Evento no encontrado"));
         List<Emprendimientos> emprendimientos = eventoExistente.getEmprendimientosSuscriptos();
@@ -59,6 +61,6 @@ public class EventosController {
                             e1.getVotos().size()))
             );
         }
-        return new ResponseEntity<>(emprendimientos, HttpStatus.OK);
+        return emprendimientos;
     }
 }

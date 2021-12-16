@@ -2,6 +2,7 @@ package com.informatorio.trabajoFinal.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.informatorio.trabajoFinal.dto.TiposEventos;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,7 +29,7 @@ public class Eventos {
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalDate fechaCierre;
     @NotEmpty
-    private String estado;
+    private TiposEventos estado;
     private BigDecimal premio;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
@@ -67,11 +68,11 @@ public class Eventos {
         this.fechaCierre = fechaCierre;
     }
 
-    public String getEstado() {
+    public TiposEventos getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(TiposEventos estado) {
         this.estado = estado;
     }
 
@@ -106,8 +107,10 @@ public class Eventos {
                 ", descripcion='" + descripcion + '\'' +
                 ", fechaCreacion=" + fechaCreacion +
                 ", fechaCierre=" + fechaCierre +
-                ", estado='" + estado + '\'' +
+                ", estado=" + estado +
                 ", premio=" + premio +
+                ", emprendimientosSuscriptos=" + emprendimientosSuscriptos +
+                ", activo=" + activo +
                 '}';
     }
 }

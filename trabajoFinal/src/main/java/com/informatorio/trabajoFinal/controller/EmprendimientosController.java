@@ -46,10 +46,16 @@ public class EmprendimientosController {
 
     @PutMapping (value = "/id/{id}")
     public ResponseEntity<?> modificarEmprendimiento (@PathVariable("id") Long emprendimientoId,
-                                                      @RequestBody @Valid Emprendimientos emprendimientoRecibido,
-                                                      @RequestParam(name = "suscripto", required = false) Long eventoId){
+                                                  @RequestBody @Valid Emprendimientos emprendimientoRecibido,
+                                                  @RequestParam(name = "suscripto", required = false) Long eventoId){
         Emprendimientos emprendimientoExistente = emprendimientosRepository.findById(emprendimientoId)
                                         .orElseThrow(()->new EntityNotFoundException("Emprendimiemto no encontrado"));
+        if(eventoId != null){
+            Eventos eventoASuscibirse = eventosRepository.findById(eventoId)
+                    .orElseThrow(()-> new EntityNotFoundException("Evento no encontrado"));
+            eventoASuscibirse.getEmprendimientosSuscriptos().add(emprendimientoExistente);
+            eventosRepository.save(eventoASuscibirse);
+        }
         emprendimientoExistente.setNombre(emprendimientoRecibido.getNombre());
         emprendimientoExistente.setDescripcion(emprendimientoRecibido.getDescripcion());
         emprendimientoExistente.setContenido(emprendimientoRecibido.getContenido());
@@ -57,11 +63,15 @@ public class EmprendimientosController {
             emprendimientoExistente.setObjetivo(emprendimientoRecibido.getObjetivo());
         }
         emprendimientoExistente.setPublicado(emprendimientoRecibido.isPublicado());
-        if(eventoId != null){
-            Eventos eventoASuscibirse = eventosRepository.findById(eventoId)
-                    .orElseThrow(()-> new EntityNotFoundException("Evento no encontrado"));
-            emprendimientoExistente.setEventos(eventoASuscibirse);
-        }
+
         return new ResponseEntity<>(emprendimientosRepository.save(emprendimientoExistente), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(value="/id/{id}")
+    public void eliminarEmprendimiento(@PathVariable("id")Long empId){
+        Emprendimientos emprendimiento = emprendimientosRepository.findById(empId)
+                .orElseThrow(()-> new EntityNotFoundException("Emprendimento no encontrado"));
+        emprendimiento.setActivo(false);
+        emprendimientosRepository.save(emprendimiento);
     }
 }
